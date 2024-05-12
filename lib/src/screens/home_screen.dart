@@ -1,3 +1,5 @@
+import 'package:everide_frontend/src/constants/app_contants.dart';
+import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,15 +25,38 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Center(
         //loading == true? loading, else show your widget
         child: user.loading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
+            ? CircularProgressIndicator()
             : //test your widgets here
-            Text(
-                user.user.username,
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: secondaryColor,
+                            width: 13,
+                          ),
+                        ),
+                        child: Center(
+                            child: Text(
+                          'CO2',
+                          style: TextStyle(fontWeight: FontWeight.w800),
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
               ),
       ),
     );
