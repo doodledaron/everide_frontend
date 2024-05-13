@@ -3,7 +3,6 @@ import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:everide_frontend/src/widgets/fun_fact_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../models/models.dart';
@@ -92,11 +91,11 @@ class _AddCarpoolerScreenState extends State<AddCarpoolerScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
-            FunFactCard(carbonValue: 2000),
-            SizedBox(
+            const FunFactCard(),
+            const SizedBox(
               height: 25,
             ),
             showFriendList
@@ -116,7 +115,7 @@ class _AddCarpoolerScreenState extends State<AddCarpoolerScreen> {
                       ),
                     ),
                   )
-                : SizedBox(),
+                : const SizedBox(),
             const SizedBox(
               height: 25,
             ),

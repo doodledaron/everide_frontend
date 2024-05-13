@@ -4,13 +4,10 @@ import '../constants/app_contants.dart';
 import '../constants/colors.dart';
 
 class FunFactCard extends StatelessWidget {
-  final int carbonValue;
-
   const FunFactCard({
     super.key,
-    required this.carbonValue,
+    
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
