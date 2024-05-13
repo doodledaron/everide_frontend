@@ -1,6 +1,7 @@
-import 'package:everide_frontend/src/constants/app_contants.dart';
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
+import 'package:everide_frontend/src/screens/add_carpooler_screen.dart';
+import 'package:everide_frontend/src/widgets/fun_fact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     //fetch user data in initState, so it only fetches one day when app initialized
     //You can only write above code with listen: false if you are writing it inside initState(). By setting listen: false you tell not to rebuild the widget upon data changes happen inside the provider.
+    //we only have to do it once here to set our user, then other screens can just access it
     Provider.of<UserProvider>(context, listen: false).fetchUserData();
   }
 
@@ -29,35 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         //loading == true? loading, else show your widget
         child: user.loading
-            ? CircularProgressIndicator()
+            ? const CircularProgressIndicator()
             : //test your widgets here
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-                child: Container(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: secondaryColor,
-                            width: 13,
-                          ),
-                        ),
-                        child: Center(
-                            child: Text(
-                          'CO2',
-                          style: TextStyle(fontWeight: FontWeight.w800),
-                        )),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            const AddCarpoolerScreen(),
       ),
     );
   }
