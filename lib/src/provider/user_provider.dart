@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
+import '../models/my_user_model.dart';
 
 class UserProvider extends ChangeNotifier {
   late MyUser _user;

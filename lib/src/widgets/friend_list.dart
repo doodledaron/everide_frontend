@@ -12,7 +12,7 @@ class FriendList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 100,
-      width: 300,
+      width: 250,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: friendNameList.length,

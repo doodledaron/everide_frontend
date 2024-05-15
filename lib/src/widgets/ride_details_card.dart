@@ -1,4 +1,4 @@
-import 'package:everide_frontend/src/models/models.dart';
+import 'package:everide_frontend/src/models/my_user_model.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:everide_frontend/src/widgets/friend_list.dart';
 import 'package:flutter/material.dart';
