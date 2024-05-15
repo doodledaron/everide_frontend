@@ -2,15 +2,12 @@ import 'dart:async';
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/models/my_user_model.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-
-import '../constants/app_contants.dart';
 import '../widgets/friend_list.dart';
 
 class PrimaryMapScreen extends StatefulWidget {
