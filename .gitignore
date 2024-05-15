@@ -12,6 +12,7 @@
 .dart_tool/
 .packages
 .pub-cache/
+api_path.dart
 .flutter-plugins
 .flutter-plugins-dependencies
 .macos/
