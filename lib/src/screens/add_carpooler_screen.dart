@@ -5,7 +5,7 @@ import 'package:everide_frontend/src/widgets/fun_fact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/models.dart';
+import '../models/my_user_model.dart';
 
 class AddCarpoolerScreen extends StatefulWidget {
   const AddCarpoolerScreen({super.key});

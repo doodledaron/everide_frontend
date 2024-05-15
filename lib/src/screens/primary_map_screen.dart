@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:everide_frontend/src/constants/colors.dart';
-import 'package:flutter/widgets.dart';
+import 'package:everide_frontend/src/models/my_user_model.dart';
+import 'package:everide_frontend/src/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import '../widgets/friend_list.dart';
 
 class PrimaryMapScreen extends StatefulWidget {
   const PrimaryMapScreen({super.key});
@@ -40,6 +43,11 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+    final List<MyUser> friendList = user.friends;
+    final List<String> friendNameList =
+        friendList.map((e) => e.username).toList();
+    print(friendNameList);
     return Scaffold(
       body: currentPosition == null
           ? const Center(child: CircularProgressIndicator())
@@ -66,47 +74,74 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
                       style: TextStyle(
                           fontWeight: FontWeight.w100, color: Colors.black54),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 100,
-                          width: MediaQuery.sizeOf(context).width * 0.6,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 8,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  child: Column(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.grey,
-                                        backgroundImage:
-                                            AssetImage('assets/billie.jpeg'),
-                                      ),
-                                      Text('Sample Name'),
-                                      Divider(
-                                        color: Colors.grey[500],
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }),
+                        FriendList(
+                          friendNameList: friendNameList,
                         ),
-                        Spacer(
+                        const Spacer(
                           flex: 2,
                         ),
                         IconButton(
+                          iconSize: 40,
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.navigate_next,
                             color: primaryColor,
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Material(
+                      color: secondaryColor,
+                      borderRadius: BorderRadius.circular(15),
+                      child: InkWell(
+                        splashColor: primaryColor,
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () {
+                          //the user wont able to navigate back
+                        },
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: secondaryColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const SizedBox(
+                            height: 50,
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Spacer(),
+                                Text(
+                                  'Destination',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                                Spacer(
+                                  flex: 7,
+                                ),
+                                Icon(
+                                  Icons.search,
+                                  color: Colors.black45,
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
