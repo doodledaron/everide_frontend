@@ -3,7 +3,7 @@ import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'src/screens/home_screen.dart';
+import 'src/provider/ride_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => RideProvider()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
