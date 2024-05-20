@@ -1,13 +1,12 @@
-import 'dart:async';
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/models/my_user_model.dart';
+import 'package:everide_frontend/src/provider/google_map_service_provider.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import '../widgets/friend_list.dart';
 
 class PrimaryMapScreen extends StatefulWidget {
@@ -18,27 +17,30 @@ class PrimaryMapScreen extends StatefulWidget {
 }
 
 class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
-  final locationController = Location();
-
-  LatLng? currentPosition; // will be used to store the current location of user
-  late StreamSubscription<LocationData> locationSubscription;
-
+  late GoRouter router;
+  GoogleMapServiceProvider? _googleMapServiceProvider; // to be later saved
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) async => await initializeMap());
+    WidgetsBinding.instance.addPostFrameCallback((_) async =>
+        await Provider.of<GoogleMapServiceProvider>(context, listen: false)
+            .initializeCurrentLocationUpdates());
   }
 
-  Future<void> initializeMap() async {
-    await fetchLocationUpdates(); //fetch the
+
+//Since Provider cannot be directly accessed in the dispose method, you use didChangeDependencies to save a reference to the provider instance. This reference can then be used in the dispose method to perform cleanup tasks.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    //save a reference,coz Provider cant be used in the dispose() method
+    _googleMapServiceProvider =
+        Provider.of<GoogleMapServiceProvider>(context, listen: false);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _googleMapServiceProvider?.cancelCurrentLocationUpdates();
     super.dispose();
-    locationSubscription.cancel();
   }
 
   @override
@@ -47,7 +49,8 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
     final List<MyUser> friendList = user.friends;
     final List<String> friendNameList =
         friendList.map((e) => e.username).toList();
-    print(friendNameList);
+    final currentPosition =
+        Provider.of<GoogleMapServiceProvider>(context).currentPosition;
     return Scaffold(
       body: currentPosition == null
           ? const Center(child: CircularProgressIndicator())
@@ -74,7 +77,7 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
                       style: TextStyle(
                           fontWeight: FontWeight.w100, color: Colors.black54),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -97,7 +100,7 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Material(
@@ -108,6 +111,11 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
                           //the user wont able to navigate back
+                          context.pushNamed('choosedestination',
+                              extra: currentPosition);
+                          Provider.of<GoogleMapServiceProvider>(context,
+                                  listen: false)
+                              .cancelCurrentLocationUpdates();
                         },
                         child: Ink(
                           decoration: BoxDecoration(
@@ -147,60 +155,18 @@ class _PrimaryMapScreenState extends State<PrimaryMapScreen> {
               ),
               body: GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: currentPosition!,
+                  target: currentPosition,
                   zoom: 15,
                 ),
                 markers: {
                   Marker(
                     markerId: const MarkerId('currentLocation'),
                     icon: BitmapDescriptor.defaultMarker,
-                    position: currentPosition!,
+                    position: currentPosition,
                   ),
                 },
               ),
             ),
     );
-  }
-
-//will be invoked in initState - get current location
-  Future<void> fetchLocationUpdates() async {
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
-
-    //check if service is enabled
-    serviceEnabled = await locationController.serviceEnabled();
-    if (!serviceEnabled) {
-      //request for the service
-      serviceEnabled = await locationController.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
-    }
-
-    //check if permission is granted
-    permissionGranted = await locationController.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      //prompt the user to allow the app access to the location
-      permissionGranted = await locationController.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        //if not allow, exit
-        return;
-      }
-    }
-
-    //listen to location changes
-    //assign the location controller to the subscription so that we can dispose it later
-    locationSubscription = locationController.onLocationChanged
-        .listen((LocationData currentLocation) {
-      if (currentLocation.latitude != null &&
-          currentLocation.longitude != null) {
-        //update the current location which can bu used later to display the marker
-        setState(() {
-          currentPosition =
-              LatLng(currentLocation.latitude!, currentLocation.longitude!);
-        });
-        print(currentLocation);
-      }
-    });
   }
 }

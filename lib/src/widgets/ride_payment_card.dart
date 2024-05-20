@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
-
 import '../constants/app_contants.dart';
 import '../constants/colors.dart';
 
 class RidePaymentCard extends StatefulWidget {
-  final int carbonValue;
-
   const RidePaymentCard({
     super.key,
-    required this.carbonValue,
   });
 
   @override
@@ -81,7 +77,7 @@ class _RidePaymentCardState extends State<RidePaymentCard> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   CircleAvatar(
@@ -98,20 +94,20 @@ class _RidePaymentCardState extends State<RidePaymentCard> {
                   const Spacer(
                     flex: 1,
                   ),
-                  Container(
+                  const SizedBox(
                     height: 80,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Any Ride ',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const Text(
+                        Text(
                           'Up to 4 pax + 2 baggage',
                           style: TextStyle(
                             fontSize: 12,
@@ -124,7 +120,7 @@ class _RidePaymentCardState extends State<RidePaymentCard> {
                   const Spacer(
                     flex: 3,
                   ),
-                  Text(
+                  const Text(
                     'RM69',
                     style: TextStyle(
                       fontSize: 18,
