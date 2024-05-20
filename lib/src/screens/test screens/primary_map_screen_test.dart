@@ -25,7 +25,6 @@ class _PrimaryMapScreenTestState extends State<PrimaryMapScreenTest> {
       locationSubscription; //so that we could cancel the subscription to currently location when we change the screen
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     locationSubscription.cancel();
   }

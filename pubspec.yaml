@@ -41,6 +41,10 @@ dependencies:
   location: ^6.0.2
   google_maps_flutter: ^2.6.1
   flutter_polyline_points: ^2.0.0
+  flutter_google_places_sdk: ^0.3.9
+  uuid: ^4.4.0
+  http: ^1.2.1
+  loading_indicator: ^3.1.1
 
 dev_dependencies:
   flutter_test:

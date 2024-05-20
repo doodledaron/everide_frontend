@@ -1,5 +1,6 @@
 import 'package:everide_frontend/src/constants/app_contants.dart';
 import 'package:everide_frontend/src/constants/colors.dart';
+import 'package:everide_frontend/src/provider/order_provider.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:everide_frontend/src/widgets/fun_fact_card.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _AddCarpoolerScreenState extends State<AddCarpoolerScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+    final orderProvider = Provider.of<OrderProvider>(context);
     final List<MyUser> allUser = user.friends.map((friend) => friend).toList();
     final List<String> allUserName = allUser.map((e) => e.username).toList();
 
@@ -109,6 +111,26 @@ class _AddCarpoolerScreenState extends State<AddCarpoolerScreen> {
                         itemCount: foundUsers.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
+                            onTap: () {
+                              //find the MyUser based on username string
+                              final selectedUser = allUser.firstWhere(
+                                  (element) =>
+                                      element.username == foundUsers[index]);
+                              try {
+                                orderProvider.addCarPooler(selectedUser);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Added carpooler!'),
+                                  ),
+                                );
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(e.toString()),
+                                  ),
+                                );
+                              }
+                            },
                             title: Text(foundUsers[index]),
                           );
                         },

@@ -28,51 +28,181 @@ class UserProvider extends ChangeNotifier {
           'bookingId': '1',
           'date': '2024-05-12',
           'Pickup location': 'Mid Valley',
-          'Payment method': 'Touch n Go'
+          'Payment method': 'Touch n Go',
+          'destination': '103 Coffee Chowkit',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+          'carpool': [
+            MyUser(
+              id: '2',
+              username: 'Alpha',
+              email: 'jane@example.com',
+              password: 'password456',
+              phoneNumber: '+9876543210',
+              profilePicture: 'https://example.com/profile2.jpg',
+              bookingHistory: [
+                {
+                  'bookingId': '1',
+                  'date': '2024-05-12',
+                  'Pickup location': 'Mid Valley',
+                  'Payment method': 'Touch n Go',
+                  'destination': 'Tamarind Square',
+                  'destination address':
+                      'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+                },
+                {
+                  'bookingId': '2',
+                  'date': '2024-05-10',
+                  'Pickup location': 'Central Square',
+                  'Payment method': 'Card',
+                  'destination': 'Tamarind Square',
+                  'destination address':
+                      'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+                },
+                {
+                  'bookingId': '3',
+                  'date': '2024-05-08',
+                  'Pickup location': 'Multimedia University',
+                  'Payment method': 'Cash',
+                  'destination': 'Tamarind Square',
+                  'destination address':
+                      'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+                },
+              ],
+              friends: [],
+            ),
+            MyUser(
+              id: '2',
+              username: 'Alpha',
+              email: 'jane@example.com',
+              password: 'password456',
+              phoneNumber: '+9876543210',
+              profilePicture: 'https://example.com/profile2.jpg',
+              bookingHistory: [
+                {
+                  'bookingId': '1',
+                  'date': '2024-05-12',
+                  'Pickup location': 'Mid Valley',
+                  'Payment method': 'Touch n Go',
+                  'destination': 'Tamarind Square',
+                  'destination address':
+                      'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+                },
+                {
+                  'bookingId': '2',
+                  'date': '2024-05-10',
+                  'Pickup location': 'Central Square',
+                  'Payment method': 'Card',
+                  'destination': 'Tamarind Square',
+                  'destination address':
+                      'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+                },
+                {
+                  'bookingId': '3',
+                  'date': '2024-05-08',
+                  'Pickup location': 'Multimedia University',
+                  'Payment method': 'Cash',
+                  'destination': 'Tamarind Square',
+                  'destination address':
+                      'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+                },
+              ],
+              friends: [],
+            ),
+          ]
         },
         {
           'bookingId': '2',
           'date': '2024-05-10',
           'Pickup location': 'Central Square',
-          'Payment method': 'Card'
+          'Payment method': 'Card',
+          'destination': 'KLCC',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
         },
         {
           'bookingId': '3',
           'date': '2024-05-08',
           'Pickup location': 'Multimedia University',
-          'Payment method': 'Cash'
+          'Payment method': 'Cash',
+          'destination': 'Tamarind Square',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '4',
+          'date': '2024-05-12',
+          'Pickup location': 'Mid Valley',
+          'Payment method': 'Touch n Go',
+          'destination': '1Utama',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '5',
+          'date': '2024-05-10',
+          'Pickup location': 'Glenmerie',
+          'Payment method': 'Card',
+          'destination': 'Tamarind Square',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '6',
+          'date': '2024-05-08',
+          'Pickup location': 'Multimedia University',
+          'Payment method': 'Cash',
+          'destination': 'Bukit Kinrara',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '5',
+          'date': '2024-05-10',
+          'Pickup location': 'Glenmerie',
+          'Payment method': 'Card',
+          'destination': 'Tamarind Square',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '6',
+          'date': '2024-05-08',
+          'Pickup location': 'Multimedia University',
+          'Payment method': 'Cash',
+          'destination': 'Bukit Kinrara',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '6',
+          'date': '2024-05-08',
+          'Pickup location': 'Multimedia University',
+          'Payment method': 'Cash',
+          'destination': 'Bukit Kinrara',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '5',
+          'date': '2024-05-10',
+          'Pickup location': 'Glenmerie',
+          'Payment method': 'Card',
+          'destination': 'Tamarind Square',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
+        },
+        {
+          'bookingId': '6',
+          'date': '2024-05-08',
+          'Pickup location': 'Multimedia University',
+          'Payment method': 'Cash',
+          'destination': 'Bukit Kinrara',
+          'destination address':
+              'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
         },
       ],
       friends: [
-        MyUser(
-          id: '2',
-          username: 'Alpha',
-          email: 'jane@example.com',
-          password: 'password456',
-          phoneNumber: '+9876543210',
-          profilePicture: 'https://example.com/profile2.jpg',
-          bookingHistory: [
-            {
-              'bookingId': '4',
-              'date': '2024-05-06',
-              'Pickup location': 'Times Square',
-              'Payment method': 'Card'
-            },
-            {
-              'bookingId': '5',
-              'date': '2024-05-04',
-              'Pickup location': 'Sunway Pyramid',
-              'Payment method': 'Touch n Go'
-            },
-            {
-              'bookingId': '6',
-              'date': '2024-05-02',
-              'Pickup location': 'KLCC',
-              'Payment method': 'Cash'
-            },
-          ],
-          friends: [],
-        ),
         MyUser(
           id: '3',
           username: 'Song',
@@ -82,22 +212,31 @@ class UserProvider extends ChangeNotifier {
           profilePicture: 'https://example.com/profile3.jpg',
           bookingHistory: [
             {
-              'bookingId': '7',
-              'date': '2024-04-30',
-              'Pickup location': 'Pavilion',
-              'Payment method': 'Card'
+              'bookingId': '1',
+              'date': '2024-05-12',
+              'Pickup location': 'Mid Valley',
+              'Payment method': 'Touch n Go',
+              'destination': 'Tamarind Square',
+              'destination address':
+                  'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
             },
             {
-              'bookingId': '8',
-              'date': '2024-04-28',
-              'Pickup location': 'One Utama',
-              'Payment method': 'Touch n Go'
+              'bookingId': '2',
+              'date': '2024-05-10',
+              'Pickup location': 'Central Square',
+              'Payment method': 'Card',
+              'destination': 'Tamarind Square',
+              'destination address':
+                  'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
             },
             {
-              'bookingId': '9',
-              'date': '2024-04-26',
-              'Pickup location': 'Sunway Velocity',
-              'Payment method': 'Cash'
+              'bookingId': '3',
+              'date': '2024-05-08',
+              'Pickup location': 'Multimedia University',
+              'Payment method': 'Cash',
+              'destination': 'Tamarind Square',
+              'destination address':
+                  'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
             },
           ],
           friends: [],
@@ -111,22 +250,31 @@ class UserProvider extends ChangeNotifier {
           profilePicture: 'https://example.com/profile4.jpg',
           bookingHistory: [
             {
-              'bookingId': '10',
-              'date': '2024-04-24',
-              'Pickup location': 'IOI City Mall',
-              'Payment method': 'Card'
+              'bookingId': '1',
+              'date': '2024-05-12',
+              'Pickup location': 'Mid Valley',
+              'Payment method': 'Touch n Go',
+              'destination': 'Tamarind Square',
+              'destination address':
+                  'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
             },
             {
-              'bookingId': '11',
-              'date': '2024-04-22',
-              'Pickup location': 'The Gardens Mall',
-              'Payment method': 'Touch n Go'
+              'bookingId': '2',
+              'date': '2024-05-10',
+              'Pickup location': 'Central Square',
+              'Payment method': 'Card',
+              'destination': 'Tamarind Square',
+              'destination address':
+                  'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
             },
             {
-              'bookingId': '12',
-              'date': '2024-04-20',
-              'Pickup location': 'Empire Shopping Gallery',
-              'Payment method': 'Cash'
+              'bookingId': '3',
+              'date': '2024-05-08',
+              'Pickup location': 'Multimedia University',
+              'Payment method': 'Cash',
+              'destination': 'Tamarind Square',
+              'destination address':
+                  'ET2-31-05 Tower 2 Eclipse Residence, Persiaran Multimedia, Cyber 11, 63000 Cyberjaya',
             },
           ],
           friends: [],
