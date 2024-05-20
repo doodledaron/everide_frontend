@@ -1,12 +1,17 @@
 import 'package:everide_frontend/config/routes/go_routes.dart';
+import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/google_map_service_provider.dart';
 import 'package:everide_frontend/src/provider/order_provider.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) => runApp(const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +35,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(useMaterial3: true, fontFamily: "Proxima Nova"),
+        theme: ThemeData(
+            useMaterial3: true,
+            fontFamily: "Proxima Nova",
+            colorScheme: ColorScheme.fromSeed(seedColor: primaryColor)),
         routerConfig: router,
       ),
     );

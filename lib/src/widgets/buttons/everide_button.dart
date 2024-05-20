@@ -23,7 +23,7 @@ class EverideButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
         ),
         child: SizedBox(
-          height: 50,
+          height: 60,
           child: Row(
             children: [
               const SizedBox(

@@ -1,21 +1,25 @@
-import 'dart:math';
-
 import 'package:everide_frontend/src/provider/order_provider.dart';
-import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:everide_frontend/src/widgets/buttons/pick_me_up_button.dart';
+
 import 'package:everide_frontend/src/widgets/friend_list.dart';
+import 'package:everide_frontend/src/widgets/popups/driver_found_popup.dart';
+import 'package:everide_frontend/src/widgets/popups/finding_driver_popup.dart';
 import 'package:everide_frontend/src/widgets/ride_payment_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../constants/api_path.dart';
 import '../constants/colors.dart';
 import '../models/my_user_model.dart';
 import '../provider/google_map_service_provider.dart';
+import '../utils/distance_calculator.dart';
+
+import 'package:delightful_toast/delight_toast.dart';
+
+import 'package:delightful_toast/toast/components/toast_card.dart';
+import 'package:delightful_toast/toast/utils/enums.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
   const OrderSummaryScreen({super.key});
@@ -24,39 +28,32 @@ class OrderSummaryScreen extends StatefulWidget {
   State<OrderSummaryScreen> createState() => _OrderSummaryScreenState();
 }
 
-LatLng stringToLatLng(String latStr, String lngStr) {
-  double latitude = double.parse(latStr);
-  double longitude = double.parse(latStr);
-  return LatLng(latitude, longitude);
-}
+//drivers
+List<LatLng> mockDrivers = [
+  const LatLng(3.073763, -258.327371), //OUG
+  const LatLng(2.922211, -258.311361), // putrajaya
+  const LatLng(2.970834, -258.346925), //16Sierra
+];
 
-double calculateDistance(lat1, lon1, lat2, lon2) {
-  var p = 0.017453292519943295;
-  var c = cos;
-  var a = 0.5 -
-      c((lat2 - lat1) * p) / 2 +
-      c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-  return 12742 * asin(sqrt(a));
-}
-
-double getDistance(List<LatLng> coordinates) {
-  double totalDistance = 0;
-  for (int i = 0; i < coordinates.length - 1; i++) {
-    totalDistance += calculateDistance(
-        coordinates[i].latitude,
-        coordinates[i].longitude,
-        coordinates[i + 1].latitude,
-        coordinates[i + 1].longitude);
+//calculate distance between user and driver
+LatLng findNearestDriver(LatLng userLocation, List<LatLng> drivers) {
+  double minDistance = double.infinity;
+  LatLng nearestDriver = drivers[0];
+  for (LatLng driver in drivers) {
+    double distance = calculateDistance(userLocation.latitude,
+        userLocation.longitude, driver.latitude, driver.longitude);
+    if (distance < minDistance) {
+      minDistance = distance;
+      nearestDriver = driver;
+    }
   }
-  return totalDistance;
+  return nearestDriver;
 }
 
 class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   bool? _isFriendListEmpty;
-  List<LatLng>? coordinates; //to calculate the distance
-  Map<PolylineId, Polyline> polylines = {}; // Store the polylines
-  // late final totalDistance;
-  double? _totalDistance;
+  Map<PolylineId, Polyline> polylines = {};
+  Set<Marker> markers = {};
 
   @override
   void initState() {
@@ -66,26 +63,68 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
     });
   }
 
-  Future<List<LatLng>> fetchPolylinePoints(
-      LatLng pickUpLocation, LatLng destinationLocation) async {
-    final polylinePoints = PolylinePoints();
+  Future<void> initializeMap() async {
+    final googleMapProvider =
+        Provider.of<GoogleMapServiceProvider>(context, listen: false);
+    final LatLng pickUpLatLng = getLatLngFromProvider(context, 'pickup');
+    final LatLng destinationLatLng =
+        getLatLngFromProvider(context, 'destination');
+    Marker pickUpMarker = Marker(
+      markerId: const MarkerId('currentLocation'),
+      icon: BitmapDescriptor.defaultMarker,
+      position: pickUpLatLng,
+    );
+    Marker destinationMarker = Marker(
+      markerId: const MarkerId('destinationLocation'),
+      icon: BitmapDescriptor.defaultMarker,
+      position: destinationLatLng,
+    );
+    setState(() {
+      markers.add(pickUpMarker);
+      markers.add(destinationMarker);
+    });
+    await googleMapProvider.fetchPolylinePoints(pickUpLatLng, destinationLatLng,
+        true); // Get the polyline between the source and destination locations
+    generatePolyLineFromPoints(googleMapProvider
+        .coordinatesFromUserToDestination!); // Draw the polyline
+  }
 
-    // This will get routes between the pickup and destination locations
-    final result = await polylinePoints.getRouteBetweenCoordinates(
-        googleMapApi,
-        PointLatLng(pickUpLocation.latitude, pickUpLocation.longitude),
-        PointLatLng(
-            destinationLocation.latitude, destinationLocation.longitude),
-        travelMode: TravelMode.driving);
+  void moveDriverMarkerAlongPolyline(Marker driverMarker,
+      List<LatLng> polylinePoints, bool isReachedDestination) async {
+    int totalSteps = polylinePoints.length;
+    int stepDuration = const Duration(seconds: 3).inMilliseconds ~/ totalSteps;
 
-    if (result.points.isNotEmpty) {
-      // Map the PolylinePoints into LatLng
-      return result.points
-          .map((point) => LatLng(point.latitude, point.longitude))
-          .toList();
-    } else {
-      debugPrint(result.errorMessage);
-      return [];
+    for (LatLng point in polylinePoints) {
+      setState(() {
+        markers
+            .removeWhere((marker) => marker.markerId == driverMarker.markerId);
+        driverMarker = driverMarker.copyWith(
+          positionParam: point,
+        );
+        markers.add(driverMarker);
+      });
+      await Future.delayed(Duration(milliseconds: stepDuration));
+    }
+    if (mounted) {
+      DelightToastBar(
+        autoDismiss: true,
+        position: DelightSnackbarPosition.top,
+        builder: (context) => ToastCard(
+          leading: const Icon(
+            Icons.energy_savings_leaf_rounded,
+            size: 28,
+          ),
+          title: Text(
+            isReachedDestination
+                ? "Beep beep! Your driver has arrived at your location!"
+                : "Yey! Your driver has reached!",
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ).show(context);
     }
   }
 
@@ -101,18 +140,6 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
     );
 
     setState(() => polylines[id] = polyline);
-  }
-
-  Future<void> initializeMap() async {
-    final LatLng pickUpLatLng = getLatLngFromProvider(context, 'pickup');
-    final LatLng destinationLatLng =
-        getLatLngFromProvider(context, 'destination');
-    coordinates = await fetchPolylinePoints(pickUpLatLng,
-        destinationLatLng); // Get the polyline between the source and destination locations
-    generatePolyLineFromPoints(coordinates!); // Draw the polyline
-    setState(() {
-      _totalDistance = getDistance(coordinates!);
-    });
   }
 
   @override
@@ -152,6 +179,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
   }
 
   Widget _buildPanelContent(List<String> friendNameList) {
+    final googleMapProvider = Provider.of<GoogleMapServiceProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
@@ -187,7 +215,76 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
 
           const RidePaymentCard(),
           const SizedBox(height: 15),
-          GreenButton(onPressed: () {}, text: 'Order now'),
+          GreenButton(
+            onPressed: () async {
+              final LatLng userLocation =
+                  getLatLngFromProvider(context, 'pickup');
+
+              // Show a loading popup indicating that the app is finding a driver
+              showFindingDriverDialog(context);
+
+              // Delay execution for 3 seconds
+              await Future.delayed(const Duration(seconds: 3));
+
+              // Dismiss the finding driver dialog
+              Navigator.of(context).pop();
+
+              // Show a popup indicating that the driver has been found
+              showFoundDriverDialog(context);
+
+              // Delay execution for 2 seconds
+              await Future.delayed(const Duration(seconds: 2));
+
+              // Dismiss the found driver dialog
+              Navigator.of(context).pop();
+
+              // Add the driver marker on the map
+              LatLng nearestDriverlatLng =
+                  findNearestDriver(userLocation, mockDrivers);
+              Marker driverMarker = Marker(
+                markerId: const MarkerId('driverLocation'),
+                icon: BitmapDescriptor.defaultMarker,
+                position: nearestDriverlatLng,
+              );
+              markers.add(driverMarker);
+
+              // Fetch polyline points from the driver to the user's destination
+              await googleMapProvider.fetchPolylinePoints(
+                  nearestDriverlatLng, userLocation, false);
+
+              // Generate and draw the polyline from the driver to the user's destination
+              final coordinateFromDriverToUser =
+                  googleMapProvider.coordinatesFromDriverToUser;
+              generatePolyLineFromPoints(coordinateFromDriverToUser!);
+              // Show a popup indicating that the driver has arrived at the user's destination
+
+              // Move the driver marker along the polyline
+              moveDriverMarkerAlongPolyline(
+                  driverMarker, coordinateFromDriverToUser, false);
+
+              await Future.delayed(const Duration(seconds: 5));
+              // Draw the polyline from the user to the destination
+              final coordinateFromUserToDestination =
+                  googleMapProvider.coordinatesFromUserToDestination;
+              generatePolyLineFromPoints(coordinateFromUserToDestination!);
+
+              // Move the driver marker along the new polyline
+              moveDriverMarkerAlongPolyline(
+                  driverMarker, coordinateFromUserToDestination, true);
+              await Future.delayed(const Duration(seconds: 5));
+
+              if (mounted) {
+                //work around for pushAndPopUntil
+                while ((context.canPop()) &&
+                    (ModalRoute.of(context)!.settings.name != "home")) {
+                  context.pop();
+                }
+                context.pushNamed("feedback");
+              }
+            },
+            text: 'Order now',
+          ),
+
           const SizedBox(height: 15),
         ],
       ),
@@ -234,18 +331,7 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
         target: pickUpLatLng,
         zoom: 10,
       ),
-      markers: {
-        Marker(
-          markerId: const MarkerId('currentLocation'),
-          icon: BitmapDescriptor.defaultMarker,
-          position: pickUpLatLng,
-        ),
-        Marker(
-          markerId: const MarkerId('destinationLocation'),
-          icon: BitmapDescriptor.defaultMarker,
-          position: destinationLatLng,
-        ),
-      },
+      markers: Set<Marker>.of(markers),
       polylines: Set<Polyline>.of(polylines.values),
     );
   }
