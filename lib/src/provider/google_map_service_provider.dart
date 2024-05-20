@@ -2,18 +2,24 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../constants/api_path.dart';
 import '../utils/services/google_map_services.dart';
 
 class GoogleMapServiceProvider with ChangeNotifier {
   final GoogleMapServices _googleMapServices = GoogleMapServices();
-
   LatLng? currentPosition;
   List<Map<String, dynamic>> placesForAutocomplete = [];
   String pickUpLocation = '';
   List<Map<String, dynamic>> nearbyPlacesFromCurrentLocation = [];
   Map<String, dynamic> selectedPickUpLocation = {}; //selected pickup
   Map<String, dynamic> selectedDestinationLocation = {}; //selected pickup
+
+  List<LatLng>? coordinatesFromUserToDestination; //to calculate the distance
+  List<LatLng>? coordinatesFromDriverToUser;
+
+  double? _totalDistance;
 
   //will be initialized in primary map screen
   Future<void> initializeCurrentLocationUpdates() async {
@@ -65,14 +71,44 @@ class GoogleMapServiceProvider with ChangeNotifier {
   }
 
   //set the data
-  void saveSelectedDestinationLocation(Map<String, dynamic> location) async{
+  Future<void> saveSelectedDestinationLocation(
+      Map<String, dynamic> location) async {
     try {
       final placeId = location['place_id'];
-      selectedDestinationLocation = await _googleMapServices.getPlaceDetailsFromPlaceId(placeId);
+      selectedDestinationLocation =
+          await _googleMapServices.getPlaceDetailsFromPlaceId(placeId);
 
-      print(selectedDestinationLocation);
+      Future.delayed(const Duration(seconds: 2));
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> fetchPolylinePoints(LatLng pickUpLocation,
+      LatLng destinationLocation, bool isUserToDriver) async {
+    final polylinePoints = PolylinePoints();
+
+    // This will get routes between the pickup and destination locations
+    final result = await polylinePoints.getRouteBetweenCoordinates(
+        googleMapApi,
+        PointLatLng(pickUpLocation.latitude, pickUpLocation.longitude),
+        PointLatLng(
+            destinationLocation.latitude, destinationLocation.longitude),
+        travelMode: TravelMode.driving);
+
+    if (result.points.isNotEmpty) {
+      // Map the PolylinePoints into LatLng
+      if (isUserToDriver) {
+        coordinatesFromUserToDestination = result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList();
+      } else {
+        coordinatesFromDriverToUser = result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList();
+      }
+    } else {
+      debugPrint(result.errorMessage);
     }
   }
 

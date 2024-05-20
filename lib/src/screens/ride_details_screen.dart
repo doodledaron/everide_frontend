@@ -24,6 +24,7 @@ class RideDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Ride details'),
         forceMaterialTransparency: true,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),

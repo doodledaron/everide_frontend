@@ -1,7 +1,6 @@
 import 'package:everide_frontend/src/constants/app_contants.dart';
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/google_map_service_provider.dart';
-import 'package:everide_frontend/src/utils/services/google_map_services.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,7 +24,7 @@ class _ChooseDestinationScreenState extends State<ChooseDestinationScreen> {
 
   var uuid = const Uuid(); //for session token
   String _sessionToken = '1234567890';
- 
+
   bool _isLoading = false;
 
   @override
@@ -95,14 +94,11 @@ class _ChooseDestinationScreenState extends State<ChooseDestinationScreen> {
     });
   }
 
-  void setTheDestinationLocation(Map<String, dynamic> destination) {
-    Provider.of<GoogleMapServiceProvider>(context, listen: false)
+  void setTheDestinationLocation(Map<String, dynamic> destination) async {
+    await Provider.of<GoogleMapServiceProvider>(context, listen: false)
         .saveSelectedDestinationLocation(destination);
 
-    final location =
-        Provider.of<GoogleMapServiceProvider>(context, listen: false)
-            .selectedDestinationLocation;
-    print(location);
+    const CustomLoadingIndicator();
   }
 
   @override

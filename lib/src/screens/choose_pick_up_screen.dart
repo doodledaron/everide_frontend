@@ -19,6 +19,7 @@ class ChoosePickUpPointScreen extends StatefulWidget {
 
 class _ChoosePickUpPointScreenState extends State<ChoosePickUpPointScreen> {
   LatLng? currentPosition;
+  int _selectedIndex = -1;
   final PanelController _panelController = PanelController();
   @override
   void initState() {
@@ -26,6 +27,8 @@ class _ChoosePickUpPointScreenState extends State<ChoosePickUpPointScreen> {
     currentPosition =
         Provider.of<GoogleMapServiceProvider>(context, listen: false)
             .currentPosition;
+    Provider.of<GoogleMapServiceProvider>(context, listen: false)
+        .fetchNearbyPlacesFromCurrentLocation(currentPosition!);
   }
 
   void updateCurrentPosition(double lat, double lng) {
@@ -49,7 +52,6 @@ class _ChoosePickUpPointScreenState extends State<ChoosePickUpPointScreen> {
           ? const Center(child: CustomLoadingIndicator())
           : Consumer<GoogleMapServiceProvider>(
               builder: ((context, provider, child) {
-                provider.fetchNearbyPlacesFromCurrentLocation(currentPosition!);
                 return SlidingUpPanel(
                   controller: _panelController,
                   borderRadius: BorderRadius.circular(20),
@@ -80,44 +82,58 @@ class _ChoosePickUpPointScreenState extends State<ChoosePickUpPointScreen> {
                             itemCount:
                                 provider.nearbyPlacesFromCurrentLocation.length,
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                onTap: () async {
-                                  final lat =
-                                      provider.nearbyPlacesFromCurrentLocation[
-                                          index]['latitude'];
-                                  final lng =
-                                      provider.nearbyPlacesFromCurrentLocation[
-                                          index]['longitude'];
-                                  // Ensure the panel is attached and then open it
-                                  // Ensure the panel is attached and then open it
-                                  await Future.delayed(
-                                      Duration(milliseconds: 100));
-                                  if (_panelController.isAttached) {
-                                    _panelController.open();
-                                  } else {
-                                    print('Panel controller is not attached');
-                                  }
-                                  //save pick up location
-                                  setThePickUpLocation(provider
-                                      .nearbyPlacesFromCurrentLocation[index]);
-                                  updateCurrentPosition(lat, lng);
-                                },
-                                leading: const Icon(
-                                  Icons.location_on,
-                                  color: primaryColor,
-                                ),
-                                title: Text(
-                                  provider.nearbyPlacesFromCurrentLocation[
-                                      index]['name'],
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                subtitle: Text(
-                                  provider.nearbyPlacesFromCurrentLocation[
-                                      index]['des'],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                              return Container(
+                                decoration: BoxDecoration(
+                                    color: _selectedIndex == index
+                                        ? const Color.fromARGB(
+                                            48, 109, 172, 169)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: ListTile(
+                                  splashColor: backgroundColor,
+                                  onTap: () async {
+                                    setState(() {
+                                      _selectedIndex =
+                                          index; // Update the selected index
+                                    });
+                                    final lat = provider
+                                            .nearbyPlacesFromCurrentLocation[
+                                        index]['latitude'];
+                                    final lng = provider
+                                            .nearbyPlacesFromCurrentLocation[
+                                        index]['longitude'];
+                                    // Ensure the panel is attached and then open it
+                                    // Ensure the panel is attached and then open it
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 100));
+                                    if (_panelController.isAttached) {
+                                      _panelController.open();
+                                    } else {
+                                      print('Panel controller is not attached');
+                                    }
+                                    //save pick up location
+                                    setThePickUpLocation(provider
+                                            .nearbyPlacesFromCurrentLocation[
+                                        index]);
+                                    updateCurrentPosition(lat, lng);
+                                  },
+                                  leading: const Icon(
+                                    Icons.location_on,
+                                    color: primaryColor,
+                                  ),
+                                  title: Text(
+                                    provider.nearbyPlacesFromCurrentLocation[
+                                        index]['name'],
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  subtitle: Text(
+                                    provider.nearbyPlacesFromCurrentLocation[
+                                        index]['des'],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               );
                             },
@@ -128,7 +144,8 @@ class _ChoosePickUpPointScreenState extends State<ChoosePickUpPointScreen> {
                           child: GreenButton(
                             onPressed: () {
                               context.pushNamed("ordersummary");
-                            }, text: 'Pick me up!',
+                            },
+                            text: 'Pick me up!',
                           ),
                         ),
                       ],
