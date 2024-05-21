@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-class Ride {
+class BookingHistory {
   final String user;
   final String driver;
   final String pickup_location;
@@ -13,7 +13,7 @@ class Ride {
   final DateTime date;
   final List<String> shared_with_friends;
 
-  Ride({
+  BookingHistory({
     required this.user,
     required this.driver,
     required this.pickup_location,
@@ -27,7 +27,7 @@ class Ride {
     required this.shared_with_friends,
   });
 
-  Ride copyWith({
+  BookingHistory copyWith({
     String? user,
     String? driver,
     String? pickup_location,
@@ -40,7 +40,7 @@ class Ride {
     DateTime? date,
     List<String>? shared_with_friends,
   }) {
-    return Ride(
+    return BookingHistory(
       user: user ?? this.user,
       driver: driver ?? this.driver,
       pickup_location: pickup_location ?? this.pickup_location,
@@ -71,8 +71,8 @@ class Ride {
     };
   }
 
-  factory Ride.fromMap(Map<String, dynamic> map) {
-    return Ride(
+  factory BookingHistory.fromMap(Map<String, dynamic> map) {
+    return BookingHistory(
       user: map['user'].toString(),
       driver: map['driver'].toString(),
       pickup_location: map['pickup_location'].toString(),

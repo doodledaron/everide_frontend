@@ -1,12 +1,12 @@
-import 'package:everide_frontend/src/constants/api_path.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../../models/ride.dart';
+import '../../constants/api_path.dart';
+import '../../models/booking_history.dart';
 
-class RideService {
-  Future<List<Ride>> getAll() async {
-    const url = '${api}ride/';
+class BookingHistoryService {
+  Future<List<BookingHistory>> getBookingHistory() async {
+    const url = '${api}booking_history/14/';
     final uri = Uri.parse(url);
 
     try {
@@ -16,7 +16,7 @@ class RideService {
         try {
           final List<dynamic> json = jsonDecode(response.body);
           final rides = json.map((e) {
-            return Ride(
+            return BookingHistory(
               user: e['user']?.toString() ?? '',
               driver: e['driver']?.toString() ?? '',
               pickup_location: e['pickup_location']?.toString() ?? '',

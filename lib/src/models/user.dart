@@ -1,5 +1,4 @@
-class User {
-  int id;
+class MyUser {
   String username;
   String email;
   String password;
@@ -7,17 +6,15 @@ class User {
   String profilePicture;
   List<dynamic> friends;
 
-  User(
-      {required this.id,
-      required this.username,
+  MyUser(
+      {required this.username,
       required this.email,
       required this.password,
       required this.phoneNumber,
       required this.profilePicture,
       required this.friends});
 
-  User copyWith({
-    int? id,
+  MyUser copyWith({
     String? username,
     String? email,
     String? password,
@@ -25,8 +22,7 @@ class User {
     String? profilePicture,
     List<String>? friends,
   }) {
-    return User(
-      id: id ?? this.id,
+    return MyUser(
       username: username ?? this.username,
       email: email ?? this.email,
       password: password ?? this.password,
@@ -38,7 +34,6 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'username': username,
       'email': email,
       'password': password,
@@ -48,9 +43,8 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      id: map['id'],
+  factory MyUser.fromMap(Map<String, dynamic> map) {
+    return MyUser(
       username: map['username'],
       email: map['email'],
       password: map['password'],

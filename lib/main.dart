@@ -3,6 +3,7 @@ import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'src/provider/booking_history_provider.dart';
 import 'src/provider/ride_provider.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => RideProvider()),
+        ChangeNotifierProvider(create: (_) => BookingHistoryProvider()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
