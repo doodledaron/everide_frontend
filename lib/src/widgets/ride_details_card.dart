@@ -2,8 +2,8 @@ import 'package:everide_frontend/src/models/my_user_model.dart';
 import 'package:everide_frontend/src/widgets/friend_list.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/app_contants.dart';
-import '../constants/colors.dart';
+// import '../constants/app_contants.dart';
+// import '../constants/colors.dart';
 
 class RideDetailsCard extends StatelessWidget {
   final Map<String, dynamic> rideInfo;
