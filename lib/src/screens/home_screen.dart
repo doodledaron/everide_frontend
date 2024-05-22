@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //fetch user data in initState, so it only fetches one day when app initialized
     //You can only write above code with listen: false if you are writing it inside initState(). By setting listen: false you tell not to rebuild the widget upon data changes happen inside the provider.
     //we only have to do it once here to set our user, then other screens can just access it
-    Provider.of<UserProvider>(context, listen: false).fetchUserData();
+    Provider.of<UserProvider>(context, listen: false).fetchAllUser();
   }
 
   final int historyDisplayLimit = 7;
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         forceMaterialTransparency: true,
-        title: user.loading
+        title: user.isLoading
             ? const SizedBox()
             : Row(
                 children: [
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: backgroundColor,
       body: Center(
         //loading == true? loading, else show your widget
-        child: user.loading
+        child: user.isLoading
             ? const CircularProgressIndicator()
             : //test your widgets here
             Padding(
@@ -91,9 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Expanded(
-                              child: HistoryListWidget(user: user.user, historyDisplayLimit: historyDisplayLimit),
+                              child: HistoryListWidget(
+                                  
+                                  historyDisplayLimit: historyDisplayLimit),
                             ),
-                            
                           ],
                         ),
                       ),
@@ -108,5 +109,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-

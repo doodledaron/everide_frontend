@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
+import '../models/my_user_model.dart';
 import '../utils/services/user_services.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -8,8 +8,9 @@ class UserProvider extends ChangeNotifier {
   bool isLoading = false;
   List<MyUser> _users = [];
   List<MyUser> get users => _users;
+  MyUser get user => _users[0];
 
-  Future<void> getAllUser() async {
+  Future<void> fetchAllUser() async {
     isLoading = true;
     notifyListeners();
 
