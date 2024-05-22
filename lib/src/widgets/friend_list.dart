@@ -6,7 +6,7 @@ class FriendList extends StatelessWidget {
     required this.friendNameList,
   });
 
-  final List<String> friendNameList;
+  final List<dynamic> friendNameList;
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +17,22 @@ class FriendList extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: friendNameList.length,
           itemBuilder: (BuildContext ctx, int index) {
-            return Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: CircleAvatar(
+            return Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: Column(
+                children: [
+                  const CircleAvatar(
                     radius: 35,
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  friendNameList[index],
-                  style: const TextStyle(
-                    fontSize: 15,
-                  ),
-                )
-              ],
+                  const SizedBox(height: 5),
+                  Text(
+                    friendNameList[index],
+                    style: const TextStyle(
+                      fontSize: 15,
+                    ),
+                  )
+                ],
+              ),
             );
           }),
     );
