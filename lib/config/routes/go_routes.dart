@@ -1,4 +1,4 @@
-import 'package:everide_frontend/src/models/my_user_model.dart';
+
 import 'package:everide_frontend/src/screens/add_carpooler_screen.dart';
 import 'package:everide_frontend/src/screens/choose_destination.dart';
 import 'package:everide_frontend/src/screens/choose_pick_up_screen.dart';

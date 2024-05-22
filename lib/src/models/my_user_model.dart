@@ -5,7 +5,7 @@ class MyUser {
   String password;
   String phoneNumber;
   String profilePicture;
-  List<Map<String, dynamic>> bookingHistory;
+ 
   List<MyUser> friends;
 
   MyUser({
@@ -15,7 +15,7 @@ class MyUser {
     required this.password,
     required this.phoneNumber,
     required this.profilePicture,
-    required this.bookingHistory,
+    
     required this.friends,
   });
 }

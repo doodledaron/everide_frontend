@@ -1,28 +1,29 @@
-import 'package:everide_frontend/src/models/my_user_model.dart';
+
+import 'package:everide_frontend/src/provider/ride_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/colors.dart';
-
 
 class HistoryListWidget extends StatelessWidget {
   const HistoryListWidget({
     super.key,
-    required this.user,
+    
     required this.historyDisplayLimit,
   });
 
-  final MyUser user;
   final int historyDisplayLimit;
 
   @override
   Widget build(BuildContext context) {
+    final rides = Provider.of<RideProvider>(context).rides;
     return ListView.builder(
-      itemCount: user.bookingHistory.length > historyDisplayLimit
+      itemCount: rides.length > historyDisplayLimit
           ? historyDisplayLimit + 1
-          : user.bookingHistory.length,
+          : rides.length,
       itemBuilder: (context, index) {
-        final List<Map<String, dynamic>> historyList = user.bookingHistory;
+        
         if (index == historyDisplayLimit) {
           return TextButton(
             onPressed: () {
@@ -41,11 +42,11 @@ class HistoryListWidget extends StatelessWidget {
             color: primaryColor,
           ),
           title: Text(
-            historyList[index]['destination']!,
+            rides[index].destination_location,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
-          subtitle: Text(
-            historyList[index]['destination address']!,
+          subtitle: const Text(
+           '241, Petronas Twin Tower, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

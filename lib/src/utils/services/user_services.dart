@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../constants/api_path.dart';
-import '../../models/user.dart';
+import '../../models/my_user_model.dart';
 
 class UserService {
   Future<List<MyUser>> getAll() async {
@@ -16,15 +16,13 @@ class UserService {
           final List<dynamic> json = jsonDecode(response.body);
           final users = json.map((e) {
             return MyUser(
+              id: e['id']?.toString() ?? '',
               username: e['username']?.toString() ?? '',
               email: e['email']?.toString() ?? '',
               password: e['password']?.toString() ?? '',
               phoneNumber: e['phoneNumber']?.toString() ?? '',
               profilePicture: e['profilePicture']?.toString() ?? '',
-              friends: (e['friends'] as List<dynamic>?)
-                      ?.map((item) => item.toString())
-                      .toList() ??
-                  [],
+              friends: [],
             );
           }).toList();
           return users;

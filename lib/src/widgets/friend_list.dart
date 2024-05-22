@@ -26,7 +26,7 @@ class FriendList extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    friendNameList[index],
+                    friendNameList.isEmpty ? '' : friendNameList[index],
                     style: const TextStyle(
                       fontSize: 15,
                     ),
