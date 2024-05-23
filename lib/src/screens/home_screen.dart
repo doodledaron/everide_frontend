@@ -1,13 +1,13 @@
 import 'package:everide_frontend/src/constants/app_contants.dart';
 import 'package:everide_frontend/src/constants/colors.dart';
-import 'package:everide_frontend/src/models/ride.dart';
-import 'package:everide_frontend/src/provider/booking_history_provider.dart';
-import 'package:everide_frontend/src/provider/ride_provider.dart';
-import 'package:everide_frontend/src/screens/wallet_screen.dart';
+import 'package:everide_frontend/src/provider/user_provider.dart';
+
+import 'package:everide_frontend/src/widgets/saved_carbon_big_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/user_provider.dart';
+import '../widgets/buttons/everide_button.dart';
+import '../widgets/history_list_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,71 +23,90 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     //fetch user data in initState, so it only fetches one day when app initialized
     //You can only write above code with listen: false if you are writing it inside initState(). By setting listen: false you tell not to rebuild the widget upon data changes happen inside the provider.
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<UserProvider>(context, listen: false).getAllUser();
-      Provider.of<RideProvider>(context, listen: false).getAllRide();
-      Provider.of<BookingHistoryProvider>(context, listen: false)
-          .getAllBookingHistory();
-    });
+    //we only have to do it once here to set our user, then other screens can just access it
+    Provider.of<UserProvider>(context, listen: false).fetchUserData();
   }
+
+  final int historyDisplayLimit = 7;
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-    final ride = Provider.of<RideProvider>(context);
-    final booking_history = Provider.of<BookingHistoryProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        forceMaterialTransparency: true,
+        title: user.loading
+            ? const SizedBox()
+            : Row(
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('assets/billie.jpeg'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text('Hi ${user.user.username}'),
+                ],
+              ),
+      ),
       backgroundColor: backgroundColor,
       body: Center(
-          //loading == true? loading, else show your widget
-          child: user.isLoading
-              ? const CircularProgressIndicator()
-              : //test your widgets here
-              // WalletScreen(),
-              // Consumer<RideProvider>(
-              //     builder: (context, user, child) {
-              //       return ListView.builder(
-              //         itemCount: ride.rides.length,
-              //         itemBuilder: (context, index) {
-              //           return ListTile(
-              //             leading: Text(ride.rides[index].user),
-              //             title: Text(ride.rides[index].pickup_location),
-              //             subtitle: Text(
-              //                 ride.rides[index].shared_with_friends.toString()),
-              //           );
-              //         },
-              //       );
-              //     },
-              //   ),
-              Consumer<BookingHistoryProvider>(
-                  builder: (context, booking_history, child) {
-                  return ListView.builder(
-                    itemCount: booking_history.bookingHistories.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title:
-                            Text(booking_history.bookingHistories[index].user),
-                        subtitle: Text(booking_history
-                            .bookingHistories[index].pickup_location),
-                      );
-                    },
-                  );
-                })
-          // Consumer<UserProvider>(
-          //     builder: (context, user, child) {
-          //       return ListView.builder(
-          //         itemCount: user.users.length,
-          //         itemBuilder: (context, index) {
-          //           return ListTile(
-          //             title: Text(user.users[index].username),
-          //             subtitle: Text(user.users[index].email),
-          //           );
-          //         },
-          //       );
-          //     },
-          //   ),
-          ),
+        //loading == true? loading, else show your widget
+        child: user.loading
+            ? const CircularProgressIndicator()
+            : //test your widgets here
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+                child: Column(
+                  children: [
+                    const SavedCarbonBigCard(carbonValue: 68),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    const EverideButton(),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 15),
+                              child: Text(
+                                'Ever wonder your history?',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: HistoryListWidget(user: user.user, historyDisplayLimit: historyDisplayLimit),
+                            ),
+                            
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 }
+
+
