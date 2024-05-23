@@ -1,3 +1,4 @@
+import 'package:everide_frontend/src/screens/reward_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,9 @@ class _WalletScreenState extends State<WalletScreen> {
   final List<Transaction> transactions = [
     Transaction('Payment', '-RM 10.00', '24/05/2024 8:20 PM'),
     Transaction('Payment', '-RM 3.50', '24/05/2024 12:43 PM'),
-    Transaction('Carbon Footprint Earning', '+RM 1.00', '24/05/2024 12:00 AM'),
     Transaction('Payment', '-RM 4.80', '22/05/2024 6:09 PM'),
+    Transaction('Payment', '-RM 10.20', '22/05/2024 10:49 AM'),
     Transaction('Payment', '-RM 15.00', '22/05/2024 1:56 PM'),
-    Transaction('Carbon Footprint Earning', '+RM 0.90', '22/05/2024 12:00 AM'),
     Transaction('Payment', '-RM 7.00', '20/05/2024 10:12 PM'),
     Transaction('Payment', '-RM 2.89', '20/05/2024 10:10 AM'),
   ];
@@ -124,6 +124,10 @@ class _WalletScreenState extends State<WalletScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           // Handle button press
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RewardScreen()));
                         },
                         style: ElevatedButton.styleFrom(
                           // backgroundColor: backgroundColor,
