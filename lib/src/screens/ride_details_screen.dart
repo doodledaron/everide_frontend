@@ -38,7 +38,7 @@ class RideDetailScreen extends StatelessWidget {
             ),
             const SizedBox(
               height: 25,
-            )
+            ),
           ],
         ),
       ),

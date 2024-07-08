@@ -22,3 +22,8 @@ double getDistance(List<LatLng> coordinates) {
   }
   return totalDistance;
 }
+
+double calculatePrice(double distance) {
+  final price = (distance * 1.65).ceilToDouble();
+  return price;
+}

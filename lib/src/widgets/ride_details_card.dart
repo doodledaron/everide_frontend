@@ -18,19 +18,19 @@ class RideDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final carPoolers = ride.shared_with_friends; // get the carpoolers
-    final String destination = ride.destination_location;
+    final List<MyUser> carPoolers =
+        ride.sharedWithFriends; // get the carpoolers
+    final String destination = ride.destinationLocation;
     const String destinationAddress =
         '241, Petronas Twin Tower, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur';
     final String date = ride.date.toString();
-    final String pickUpLocation = ride.pickup_location;
-    const String paymentMethod = 'Card';
-    final String totalPayment = ride.total_received.toString();
+    final String pickUpLocation = ride.pickupLocation;
+    final String totalPayment = ride.totalReceived.toString();
 
-    if (carPoolers.isEmpty) {
-      throw Exception(
-          'Carpoolers data is null. Check that is carpoolers assign to that particular booking history');
-    }
+    // if (carPoolers.isEmpty) {
+    //   throw Exception(
+    //       'Carpoolers data is null. Check that is carpoolers assign to that particular booking history');
+    // }
 
     // final carPoolersNames = carPoolers
     //     .map((user) => user.username)
@@ -47,7 +47,7 @@ class RideDetailsCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Spacer(),
+              const Spacer(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,7 +66,7 @@ class RideDetailsCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   Column(
@@ -130,7 +130,7 @@ class RideDetailsCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'Fare: $totalPayment',
+                    'Fare: RM$totalPayment',
                     style: const TextStyle(
                       fontSize: 15,
                     ),
@@ -151,20 +151,24 @@ class RideDetailsCard extends StatelessWidget {
                 color: Colors.grey[200],
               ),
               const Spacer(),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Your Eve-squad:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
+                  carPoolers.isNotEmpty
+                      ? const Text(
+                          'Your Eve-squad:',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : const SizedBox(),
+                  const SizedBox(
                     height: 15,
                   ),
-                  FriendList(friendNameList: []),
+                  carPoolers.isNotEmpty
+                      ? FriendList(friendNameList: carPoolers)
+                      : const SizedBox(),
                 ],
               ),
               const Spacer(),

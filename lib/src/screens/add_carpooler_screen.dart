@@ -1,12 +1,11 @@
 import 'package:everide_frontend/src/constants/app_contants.dart';
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/order_provider.dart';
+import 'package:everide_frontend/src/provider/ride_provider.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:everide_frontend/src/widgets/fun_fact_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/my_user_model.dart';
 
 class AddCarpoolerScreen extends StatefulWidget {
   const AddCarpoolerScreen({super.key});
@@ -16,20 +15,22 @@ class AddCarpoolerScreen extends StatefulWidget {
 }
 
 class _AddCarpoolerScreenState extends State<AddCarpoolerScreen> {
-  List<String> foundUsers = []; //temporary list to show the names
+  List<dynamic> foundUsers = []; //temporary list to show the names
   bool showFriendList = false;
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+    final rideProvider = Provider.of<RideProvider>(context);
     final orderProvider = Provider.of<OrderProvider>(context);
-    final List<MyUser> allUser = user.friends.map((friend) => friend).toList();
-    final List<String> allUserName = allUser.map((e) => e.username).toList();
+    final List<dynamic> allUser =
+        user!.friends.map((friend) => friend).toList();
+    final List<dynamic> allUserName = allUser.map((e) => e.username).toList();
 
 // .map() is used for transforming elements.
 // .where() is used for filtering elements based on a condition.
     runFilter(String enteredKeywords) {
-      List<String> results = [];
+      List<dynamic> results = [];
       if (enteredKeywords.isEmpty) {
         results = allUserName;
       } else {
@@ -118,15 +119,18 @@ class _AddCarpoolerScreenState extends State<AddCarpoolerScreen> {
                                       element.username == foundUsers[index]);
                               try {
                                 orderProvider.addCarPooler(selectedUser);
+                                rideProvider.addFriend(selectedUser);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Added carpooler!'),
+                                    duration: Duration(seconds: 1),
                                   ),
                                 );
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(e.toString()),
+                                    duration: const Duration(seconds: 1),
                                   ),
                                 );
                               }

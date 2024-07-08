@@ -1,4 +1,3 @@
-
 import 'package:everide_frontend/src/provider/ride_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +8,6 @@ import '../constants/colors.dart';
 class HistoryListWidget extends StatelessWidget {
   const HistoryListWidget({
     super.key,
-    
     required this.historyDisplayLimit,
   });
 
@@ -18,12 +16,14 @@ class HistoryListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rides = Provider.of<RideProvider>(context).rides;
+    rides.sort((a, b) => b.date.compareTo(a.date));
+    final rideNames = rides.map((e) => e.destinationLocation).toList();
+    print(rideNames);
     return ListView.builder(
       itemCount: rides.length > historyDisplayLimit
           ? historyDisplayLimit + 1
           : rides.length,
       itemBuilder: (context, index) {
-        
         if (index == historyDisplayLimit) {
           return TextButton(
             onPressed: () {
@@ -42,11 +42,11 @@ class HistoryListWidget extends StatelessWidget {
             color: primaryColor,
           ),
           title: Text(
-            rides[index].destination_location,
+            rides[index].destinationLocation,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
           subtitle: const Text(
-           '241, Petronas Twin Tower, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur',
+            '241, Petronas Twin Tower, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

@@ -4,9 +4,8 @@ import '../constants/app_contants.dart';
 import '../constants/colors.dart';
 
 class RidePaymentCard extends StatefulWidget {
-  const RidePaymentCard({
-    super.key,
-  });
+  double price;
+  RidePaymentCard({super.key, required this.price});
 
   @override
   State<RidePaymentCard> createState() => _RidePaymentCardState();
@@ -120,8 +119,8 @@ class _RidePaymentCardState extends State<RidePaymentCard> {
                   const Spacer(
                     flex: 3,
                   ),
-                  const Text(
-                    'RM69',
+                  Text(
+                    'RM${widget.price.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,

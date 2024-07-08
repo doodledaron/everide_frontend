@@ -1,8 +1,10 @@
 import 'package:everide_frontend/config/routes/go_routes.dart';
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/booking_history_provider.dart';
+import 'package:everide_frontend/src/provider/driver_provider.dart';
 import 'package:everide_frontend/src/provider/google_map_service_provider.dart';
 import 'package:everide_frontend/src/provider/order_provider.dart';
+import 'package:everide_frontend/src/provider/rewards_provider.dart';
 import 'package:everide_frontend/src/provider/ride_provider.dart';
 import 'package:everide_frontend/src/provider/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => BookingHistoryProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RewardsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DriverProvider(),
         ),
       ],
       child: MaterialApp.router(

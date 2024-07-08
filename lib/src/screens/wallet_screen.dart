@@ -52,26 +52,26 @@ class _WalletScreenState extends State<WalletScreen> {
                 ),
               ],
             ),
-            Row(
+            const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
+                  padding: EdgeInsets.only(top: 15.0),
                   child: Text(
                     'RM',
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.green[800],
+                      color: Colors.black,
                     ),
                   ),
                 ),
-                const SizedBox(width: 5),
+                SizedBox(width: 5),
                 Text(
                   '0.00',
                   style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
-                    color: Colors.green[800],
+                    color: Colors.black,
                   ),
                 ),
               ],

@@ -48,10 +48,18 @@ dependencies:
   lottie: ^3.1.2
   delightful_toast: ^1.1.0
   flutter_emoji_feedback: ^0.3.0
+  font_awesome_flutter: ^10.7.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/everide_logo.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -78,6 +86,12 @@ flutter:
   - assets/car.jpg
   - assets/
   - assets/animations/car_animation.json
+  - assets/everide_logo.jpg
+  - assets/erik.jpg
+  - assets/haaland.jpg
+  - assets/messi.jpg
+  - assets/ronaldo.jpg
+  - assets/kloop.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

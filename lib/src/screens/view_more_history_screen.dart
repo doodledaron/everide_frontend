@@ -1,7 +1,5 @@
 import 'package:everide_frontend/src/constants/colors.dart';
 import 'package:everide_frontend/src/provider/ride_provider.dart';
-import 'package:everide_frontend/src/provider/user_provider.dart';
-import 'package:everide_frontend/src/widgets/history_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +32,7 @@ class _ViewMoreHistoryScreenState extends State<ViewMoreHistoryScreen> {
                 color: primaryColor,
               ),
               title: Text(
-                rides[index].destination_location,
+                rides[index].destinationLocation,
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),

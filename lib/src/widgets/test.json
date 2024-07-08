@@ -1,0 +1,237 @@
+{
+    "predictions": [
+        {
+            "description": "Cyberjaya, Selangor, Malaysia",
+            "matched_substrings": [
+                {
+                    "length": 9,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJ45NqN-62zTERzrxIC_u7HiQ",
+            "reference": "ChIJ45NqN-62zTERzrxIC_u7HiQ",
+            "structured_formatting": {
+                "main_text": "Cyberjaya",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 9,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Selangor, Malaysia"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Cyberjaya"
+                },
+                {
+                    "offset": 11,
+                    "value": "Selangor"
+                },
+                {
+                    "offset": 21,
+                    "value": "Malaysia"
+                }
+            ],
+            "types": [
+                "locality",
+                "political",
+                "geocode"
+            ]
+        },
+        {
+            "description": "Cyberjaya Lakeside, Cyberjaya, Selangor, Malaysia",
+            "matched_substrings": [
+                {
+                    "length": 9,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJuUSeia63zTERR2ZK3eT8O6c",
+            "reference": "ChIJuUSeia63zTERR2ZK3eT8O6c",
+            "structured_formatting": {
+                "main_text": "Cyberjaya Lakeside",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 9,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Cyberjaya, Selangor, Malaysia"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Cyberjaya Lakeside"
+                },
+                {
+                    "offset": 20,
+                    "value": "Cyberjaya"
+                },
+                {
+                    "offset": 31,
+                    "value": "Selangor"
+                },
+                {
+                    "offset": 41,
+                    "value": "Malaysia"
+                }
+            ],
+            "types": [
+                "park",
+                "point_of_interest",
+                "establishment"
+            ]
+        },
+        {
+            "description": "Cyberjaya City Centre MRT Station, Persiaran APEC, Cyberjaya, Selangor, Malaysia",
+            "matched_substrings": [
+                {
+                    "length": 9,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJG-bYOWK2zTERwe_8l8F1SDc",
+            "reference": "ChIJG-bYOWK2zTERwe_8l8F1SDc",
+            "structured_formatting": {
+                "main_text": "Cyberjaya City Centre MRT Station",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 9,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Persiaran APEC, Cyberjaya, Selangor, Malaysia"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Cyberjaya City Centre MRT Station"
+                },
+                {
+                    "offset": 35,
+                    "value": "Persiaran APEC"
+                },
+                {
+                    "offset": 51,
+                    "value": "Cyberjaya"
+                },
+                {
+                    "offset": 62,
+                    "value": "Selangor"
+                },
+                {
+                    "offset": 72,
+                    "value": "Malaysia"
+                }
+            ],
+            "types": [
+                "point_of_interest",
+                "establishment"
+            ]
+        },
+        {
+            "description": "Cyberjaya Hospital, Persiaran Sepang, Cyber 11, Sepang, Selangor, Malaysia",
+            "matched_substrings": [
+                {
+                    "length": 9,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJefxpUtm2zTERxEgeSi0ytIg",
+            "reference": "ChIJefxpUtm2zTERxEgeSi0ytIg",
+            "structured_formatting": {
+                "main_text": "Cyberjaya Hospital",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 9,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Persiaran Sepang, Cyber 11, Sepang, Selangor, Malaysia"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "Cyberjaya Hospital"
+                },
+                {
+                    "offset": 20,
+                    "value": "Persiaran Sepang"
+                },
+                {
+                    "offset": 38,
+                    "value": "Cyber 11"
+                },
+                {
+                    "offset": 48,
+                    "value": "Sepang"
+                },
+                {
+                    "offset": 56,
+                    "value": "Selangor"
+                },
+                {
+                    "offset": 66,
+                    "value": "Malaysia"
+                }
+            ],
+            "types": [
+                "hospital",
+                "health",
+                "point_of_interest",
+                "establishment"
+            ]
+        },
+        {
+            "description": "CYBERJAYA@ NEW WAVE HOTEL, Cyber 12, Cyberjaya, Selangor, Malaysia",
+            "matched_substrings": [
+                {
+                    "length": 9,
+                    "offset": 0
+                }
+            ],
+            "place_id": "ChIJVdNSMW63zTEROajOmfPUEw0",
+            "reference": "ChIJVdNSMW63zTEROajOmfPUEw0",
+            "structured_formatting": {
+                "main_text": "CYBERJAYA@ NEW WAVE HOTEL",
+                "main_text_matched_substrings": [
+                    {
+                        "length": 9,
+                        "offset": 0
+                    }
+                ],
+                "secondary_text": "Cyber 12, Cyberjaya, Selangor, Malaysia"
+            },
+            "terms": [
+                {
+                    "offset": 0,
+                    "value": "CYBERJAYA@ NEW WAVE HOTEL"
+                },
+                {
+                    "offset": 27,
+                    "value": "Cyber 12"
+                },
+                {
+                    "offset": 37,
+                    "value": "Cyberjaya"
+                },
+                {
+                    "offset": 48,
+                    "value": "Selangor"
+                },
+                {
+                    "offset": 58,
+                    "value": "Malaysia"
+                }
+            ],
+            "types": [
+                "lodging",
+                "point_of_interest",
+                "establishment"
+            ]
+        }
+    ],
+    "status": "OK"
+}
