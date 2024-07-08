@@ -12,9 +12,11 @@ State management: Provider
 
 API used: Google Map API
 
+github link for the backend: 
+
 ## Main features 
 
-###Booking an EveRide
+### Booking an EveRide
 
 While navigating to the 'Everide it now', it will detect your current location. Then user can search for the place that he/she intended to go (Google Places API). Lastly, based on the distance travelled, it will calculate the total fees.
 
@@ -24,12 +26,12 @@ While navigating to the 'Everide it now', it will detect your current location. 
 
 https://github.com/doodledaron/everide_frontend_updated/assets/67047462/c965230a-dd88-4c3f-816a-2aff640c8583
 
-###Ride experience
+### Ride experience
 It will search for the nearest driver. Once the driver is found, the markers will mimic the process of the driver picking up and dropping off the user.
 
 https://github.com/doodledaron/everide_frontend_updated/assets/67047462/dfafb962-79e2-4c64-bd27-236473c6b984
 
-###Future Improvements
+### Future Improvements
 
 E-wallet and rewarding system using CF (Carbon Footprint) value. The CF is calculated by the total distance travelled.
 ![Screenshot_20240708-212843](https://github.com/doodledaron/everide_frontend_updated/assets/67047462/795e34b2-50f7-41cd-8565-2b9d0bfe938a)
