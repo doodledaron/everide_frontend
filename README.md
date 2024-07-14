@@ -12,7 +12,7 @@ State management: Provider
 
 API used: Google Map API
 
-github link for the backend: 
+github link for the backend: https://github.com/alpha031117/everide
 
 ## Main features 
 
